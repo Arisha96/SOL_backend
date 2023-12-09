@@ -1,13 +1,13 @@
 from flask import Flask, jsonify
 import pandas as pd
 from get_participants import download_scorecards
-from flask.ext.cors import CORS
+from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
 
-@app.route('/')
+@app.route('/get_data')
 def get_scorecards():
     app.logger.info(f'Read file with scorecards')
     df = pd.read_excel('participants.xls')
