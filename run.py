@@ -1,8 +1,10 @@
 from flask import Flask, jsonify
 import pandas as pd
 from get_participants import download_scorecards
+from flask.ext.cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route('/')
