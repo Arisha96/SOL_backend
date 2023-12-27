@@ -1,13 +1,17 @@
 from flask import Flask, jsonify
 import pandas as pd
 from get_participants import download_scorecards
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/get_data": {"origins": "*"},
+                     r"/update": {"origins": "*"}})
+
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 
 @app.route('/get_data')
+@cross_origin(origin='*', headers=['Content-Type', 'Authorization'])
 def get_scorecards():
     app.logger.info(f'Read file with scorecards')
     df = pd.read_excel('participants.xls')
@@ -42,6 +46,7 @@ def get_scorecards():
 
 
 @app.route('/update')
+@cross_origin(origin='*',headers=['Content-Type','Authorization'])
 def update_scorecards():
     is_downloaded = download_scorecards(logger=app.logger)
     return {'status': 'SUCCESS' if is_downloaded else 'FAILED'}
