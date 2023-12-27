@@ -36,15 +36,15 @@ def get_scorecards():
                        'index': 'key'},
               inplace=True)
     app.logger.info('File was read and handled')
-    return jsonify(df[['key', 'name', 'email', 'points',
+    return df[['key', 'name', 'email', 'points',
                        'level', 'testType', 'date']].to_json(orient='records',
-                                                             date_format='iso'))
+                                                             date_format='iso')
 
 
 @app.route('/update')
 def update_scorecards():
     is_downloaded = download_scorecards(logger=app.logger)
-    return jsonify({'status': 'SUCCESS' if is_downloaded else 'FAILED'})
+    return jsonify({'status': 'SUCCESS' if is_downloaded else 'FAILED'}).headers.add("Access-Control-Allow-Origin", "*")
 
 
 if __name__ == '__main__':
