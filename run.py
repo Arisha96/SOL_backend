@@ -44,7 +44,7 @@ def get_scorecards():
 @app.route('/update')
 def update_scorecards():
     is_downloaded = download_scorecards(logger=app.logger)
-    return jsonify({'status': 'SUCCESS' if is_downloaded else 'FAILED'})
+    return {'status': 'SUCCESS' if is_downloaded else 'FAILED'}
 
 
 if __name__ == '__main__':
