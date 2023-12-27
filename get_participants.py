@@ -19,6 +19,9 @@ def download_scorecards(logger=logging.getLogger()):
         cookies['CFID'] = try_login.headers.get('CFID')
         cookies['CFTOKEN'] = try_login.headers.get('CFTOKEN')
 
+        check = requests.get('https://my.spotonlearning.eu/manage/courses/download.cfm?&courseId=0',
+                             cookies=cookies)
+        logger.info(f'Status of check: {check.status_code}')
         try_request_participants = requests.get('https://my.spotonlearning.eu/manage/excel/output/participants.xls',
                                                 cookies=cookies)
         with open('participants.xls', 'wb') as f:
