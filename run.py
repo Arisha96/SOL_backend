@@ -36,9 +36,9 @@ def get_scorecards():
                        'index': 'key'},
               inplace=True)
     app.logger.info('File was read and handled')
-    return jsonify(df[['key', 'name', 'email', 'points',
+    return df[['key', 'name', 'email', 'points',
                        'level', 'testType', 'date']].to_json(orient='records',
-                                                             date_format='iso'))
+                                                             date_format='iso')
 
 
 @app.route('/update')
